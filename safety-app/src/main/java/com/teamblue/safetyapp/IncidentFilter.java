@@ -5,8 +5,7 @@ import java.util.List;
 
 public class IncidentFilter {
     public static void filterIncidents (List<String> data) {
+        DataConversion.pdfToString();
 
-    }
-
-    
+    } 
 }
