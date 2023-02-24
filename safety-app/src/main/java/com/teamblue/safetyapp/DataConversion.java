@@ -11,10 +11,11 @@ public class DataConversion {
     }
 
     public static void downloadLatestPDF() throws IOException {
-
+        List<String> data = pdfToString ();
+        IncidentFilter.filterIncidents (data);
     }
 
-    public static List<String> pdfToString() throws IOException {
+    private static List<String> pdfToString() throws IOException {
         List<String> result = new ArrayList<>();
         return result;
     }
