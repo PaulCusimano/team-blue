@@ -21,6 +21,11 @@ public class SafetyAppApplication {
 		SpringApplication.run(SafetyAppApplication.class, args);
 	}
 
+	@GetMapping("/MakeReport")
+	public String MakeReport(@RequestParam(value = "ReportName", defaultValue = "World") String ReportName) {
+		return String.format("Made Report: %s!", ReportName);
+	}
+
 	// EXAMPLE METHODS.
 
 	// test at: http://localhost:8080/hello?name=<INSERT NAME HERE>
