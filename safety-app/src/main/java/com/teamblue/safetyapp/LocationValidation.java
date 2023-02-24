@@ -1,10 +1,11 @@
 package com.teamblue.safetyapp;
 
+import java.io.*;
 public class LocationValidation {
 
-public static void  getLocation() {
-    MapManager curLocation = new MapManager();
-    // calls MapManager to check location
-}
+    public static void getLocation() throws IOException {
+        int location = 0;
+        ReportHandler.curLocation(location);
+    }
 
 }
