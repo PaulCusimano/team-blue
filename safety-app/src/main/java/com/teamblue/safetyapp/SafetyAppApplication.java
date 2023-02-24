@@ -21,9 +21,11 @@ public class SafetyAppApplication {
 		SpringApplication.run(SafetyAppApplication.class, args);
 	}
 
-	@GetMapping("/MakeReport")
-	public String MakeReport(@RequestParam(value = "ReportName", defaultValue = "World") String ReportName) {
-		return String.format("Made Report: %s!", ReportName);
+	@PostMapping("/MakeReport")
+	public String createReport(@RequestParam String type, @RequestParam String name, @RequestParam String location) {
+		ReportHandler reportHandler = new ReportHandler();
+		reportHandler.handleReport(type, name, location);
+		return String.format("Made Report");
 	}
 
 	// EXAMPLE METHODS.
