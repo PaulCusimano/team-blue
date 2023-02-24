@@ -15,7 +15,7 @@ public class DataConversion {
         IncidentFilter.filterIncidents (data);
     }
 
-    private static List<String> pdfToString() throws IOException {
+    static List<String> pdfToString() {
         List<String> result = new ArrayList<>();
         return result;
     }
