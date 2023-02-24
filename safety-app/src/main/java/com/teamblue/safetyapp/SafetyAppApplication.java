@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @SpringBootApplication
 @RestController
@@ -21,10 +23,22 @@ public class SafetyAppApplication {
 		SpringApplication.run(SafetyAppApplication.class, args);
 	}
 
+	// Test using POSTMAN. Post mappings require a request body, which cant easily
+	// be sent via browser input.
+	// Time must be formatted as yyyy-MM-dd HH:mm in the POST request.
 	@PostMapping("/MakeReport")
-	public String createReport(@RequestParam String type, @RequestParam String name, @RequestParam String location) {
+	public String createReport(@RequestParam String type, @RequestParam String name, @RequestParam String latitude,
+			@RequestParam String longitude, @RequestParam String incidentTime) {
+
+		// This converts the incidentTime string into a java LocalDateTime object.
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		LocalDateTime incidentTimeFormatted = LocalDateTime.parse(incidentTime, formatter);
+
+		// Time of the report
+		LocalDateTime reportTime = LocalDateTime.now();
+
 		ReportHandler reportHandler = new ReportHandler();
-		reportHandler.handleReport(type, name, location);
+		reportHandler.handleReport(type, name, latitude, longitude, incidentTimeFormatted, reportTime);
 		return String.format("Made Report");
 	}
 
