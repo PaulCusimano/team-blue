@@ -37,8 +37,10 @@ public class SafetyAppApplication {
 		// Time of the report
 		LocalDateTime reportTime = LocalDateTime.now();
 
+		Report report = new Report(type, name, latitude, longitude, incidentTimeFormatted, reportTime);
+
 		ReportHandler reportHandler = new ReportHandler();
-		reportHandler.handleReport(type, name, latitude, longitude, incidentTimeFormatted, reportTime);
+		reportHandler.handleReport(report);
 		return String.format("Made Report");
 	}
 
