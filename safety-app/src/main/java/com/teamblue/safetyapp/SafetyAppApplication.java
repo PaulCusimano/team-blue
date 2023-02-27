@@ -4,13 +4,14 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.*;
+import com.teamblue.safetyapp.Models.Location;
+import com.teamblue.safetyapp.Models.Report;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.List;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -36,8 +37,9 @@ public class SafetyAppApplication {
 
 		// Time of the report
 		LocalDateTime reportTime = LocalDateTime.now();
+		Location userLocation = new Location(latitude, longitude);
 
-		Report report = new Report(type, name, latitude, longitude, incidentTimeFormatted, reportTime);
+		Report report = new Report(type, name, userLocation, incidentTimeFormatted, reportTime);
 
 		ReportHandler reportHandler = new ReportHandler();
 		reportHandler.handleReport(report);

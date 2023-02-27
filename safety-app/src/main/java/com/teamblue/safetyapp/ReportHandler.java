@@ -1,6 +1,6 @@
 package com.teamblue.safetyapp;
 
-import java.time.LocalDateTime;
+import com.teamblue.safetyapp.Models.Report;
 
 public class ReportHandler {
     public void handleReport(Report incidentReport) {
@@ -8,7 +8,8 @@ public class ReportHandler {
         System.out.println("New report created:");
         System.out.println("Type: " + incidentReport.getType());
         System.out.println("Name: " + incidentReport.getName());
-        System.out.println("Location: " + incidentReport.getLatitude() + ", " + incidentReport.getLongitude());
+        System.out.println("Location: " + incidentReport.getLocation().getLatitude() + ", "
+                + incidentReport.getLocation().getLongitude());
         System.out.println("Time of Incident: " + incidentReport.getIncidentTime());
         System.out.println("Time of Report: " + incidentReport.getReportTime());
     }
