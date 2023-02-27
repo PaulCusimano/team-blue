@@ -1,9 +1,9 @@
 package com.teamblue.safetyapp;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.database.*;
+// import com.google.auth.oauth2.GoogleCredentials;
+// import com.google.firebase.FirebaseApp;
+// import com.google.firebase.FirebaseOptions;
+// import com.google.firebase.database.*;
 import com.teamblue.safetyapp.Models.Location;
 import com.teamblue.safetyapp.Models.Report;
 
@@ -24,44 +24,90 @@ public class SafetyAppApplication {
 		SpringApplication.run(SafetyAppApplication.class, args);
 	}
 
-	// Test using POSTMAN. Post mappings require a request body, which cant easily
-	// be sent via browser input.
-	// Time must be formatted as yyyy-MM-dd HH:mm in the POST request.
+	/**
+	 * 
+	 * POST request for creating a report. It can be easily tested by
+	 * using Postman.
+	 * 
+	 * It requires a request body which cannot easily be sent through browser input.
+	 * 
+	 * @param type         The type of the incident reported.
+	 * 
+	 * @param name         The name of the person reporting the incident.
+	 * 
+	 * @param latitude     The latitude of the location where the incident occurred.
+	 * 
+	 * @param longitude    The longitude of the location where the incident
+	 *                     occurred.
+	 * 
+	 * @param incidentTime The date and time when the incident occurred. Must be in
+	 *                     yyyy-MM-dd HH:mm format.
+	 * 
+	 * @return A message indicating that the report has been successfully created.
+	 */
 	@PostMapping("/MakeReport")
 	public String createReport(@RequestParam String type, @RequestParam String name, @RequestParam String latitude,
 			@RequestParam String longitude, @RequestParam String incidentTime) {
 
-		// This converts the incidentTime string into a java LocalDateTime object.
+		// Convert the incidentTime string into a LocalDateTime object.
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		LocalDateTime incidentTimeFormatted = LocalDateTime.parse(incidentTime, formatter);
 
-		// Time of the report
+		// Get the current time as the report time.
 		LocalDateTime reportTime = LocalDateTime.now();
+
+		// Create a Location object using the latitude and longitude provided.
 		Location userLocation = new Location(latitude, longitude);
 
+		// Create a Report object with the information provided.
 		Report report = new Report(type, name, userLocation, incidentTimeFormatted, reportTime);
 
+		// Send the report to the ReportHandler to be processed.
 		ReportHandler reportHandler = new ReportHandler();
 		reportHandler.handleReport(report);
-		return String.format("Made Report");
+
+		// Return a message indicating that the report has been successfully created.
+		return String.format("Report created successfully.");
 	}
 
-	// EXAMPLE METHODS.
+	// EXAMPLE METHODS OF HOW TO USE RESTAPIs
 
-	// test at: http://localhost:8080/hello?name=<INSERT NAME HERE>
+	/**
+	 * 
+	 * GET request for returning a greeting with a name.
+	 * 
+	 * @param name The name to include in the greeting. Defaults to "World" if not
+	 *             provided.
+	 * @return A greeting with the provided name.
+	 */
 	@GetMapping("/hello")
 	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
 		return String.format("Hello %s!", name);
 	}
 
-	// test at: http://localhost:8080/multiply?number=5
+	/**
+	 * 
+	 * GET request for multiplying a number by 5.
+	 * 
+	 * @param number The number to multiply. Defaults to 5 if not provided.
+	 * @return The provided number multiplied by 5.
+	 */
 	@GetMapping("/multiply")
-	public String addition(@RequestParam(value = "number", defaultValue = "5") int number) {
+	public String multiply(@RequestParam(value = "number", defaultValue = "5") int number) {
 		number = number * 5;
 		return String.format("Here is your value multiplied by 5: %s", number);
 	}
 
-	// test at: http://localhost:8080/sum?num1=<FIRST NUMBER>&num2=<SECOND NUMBER>
+	/**
+	 * 
+	 * GET request for adding two numbers together.
+	 * 
+	 * @param num1 The first number to add.
+	 * 
+	 * @param num2 The second number to add.
+	 * 
+	 * @return The sum of the two provided numbers.
+	 */
 	@RequestMapping(value = "/sum", method = RequestMethod.GET)
 	public ResponseEntity<Integer> getSum(@RequestParam("num1") int num1, @RequestParam("num2") int num2) {
 
@@ -69,15 +115,20 @@ public class SafetyAppApplication {
 		return new ResponseEntity<Integer>(sum, HttpStatus.OK);
 	}
 
-	// http://localhost:8080/ArrSum?numbers=<NUMBER1>,<NUMBER2>,<NUMBER3>,......
+	/**
+	 * 
+	 * GET request for adding a list of numbers together.
+	 * 
+	 * @param numbers A list of numbers to add together, separated by commas.
+	 * @return The sum of the provided numbers.
+	 */
 	@RequestMapping(value = "/ArrSum", method = RequestMethod.GET)
-	public ResponseEntity<Integer> getSum(@RequestParam(value = "numbers") List<Integer> numbers) {
+	public ResponseEntity<Integer> getArraySum(@RequestParam(value = "numbers") List<Integer> numbers) {
 		int sum = 0;
 		for (int number : numbers) {
 			sum += number;
 		}
 		return new ResponseEntity<Integer>(sum, HttpStatus.OK);
 	}
-	// END EXAMPLE METHODS.
-
+	// END OF EXAMPLE METHODS
 }

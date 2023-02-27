@@ -4,14 +4,15 @@ import java.time.LocalDateTime;
 
 public class Report {
 
+    // Instance variables
     private String type;
     private String name;
     private Location location;
     private LocalDateTime incidentTime;
     private LocalDateTime reportTime;
 
-    public Report(String type, String name, Location location, LocalDateTime incidentTime,
-            LocalDateTime reportTime) {
+    // Constructor
+    public Report(String type, String name, Location location, LocalDateTime incidentTime, LocalDateTime reportTime) {
         this.type = type;
         this.name = name;
         this.location = location;
@@ -19,6 +20,7 @@ public class Report {
         this.reportTime = reportTime;
     }
 
+    // Getter and setter methods for each instance variable
     public String getType() {
         return type;
     }

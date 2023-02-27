@@ -3,8 +3,14 @@ package com.teamblue.safetyapp;
 import com.teamblue.safetyapp.Models.Report;
 
 public class ReportHandler {
+
+    /**
+     * This method handles a report and prints its data to the console.
+     *
+     * @param incidentReport the report to handle
+     */
     public void handleReport(Report incidentReport) {
-        // do stuff with data.
+        // Do stuff with data.
         System.out.println("New report created:");
         System.out.println("Type: " + incidentReport.getType());
         System.out.println("Name: " + incidentReport.getName());
