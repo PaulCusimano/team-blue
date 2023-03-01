@@ -5,36 +5,41 @@ import java.time.LocalDateTime;
 public class Report {
 
     // Instance variables
-    private String type;
-    private String name;
+    private String reportType;
+    private String reportName;
     private Location location;
-    private LocalDateTime incidentTime;
-    private LocalDateTime reportTime;
+    private LocalDateTime incidentDateTime;
+    private LocalDateTime reportDateTime;
+    private String reportDescription;
+    private String status;
 
     // Constructor
-    public Report(String type, String name, Location location, LocalDateTime incidentTime, LocalDateTime reportTime) {
-        this.type = type;
-        this.name = name;
+    public Report(String type, String name, Location location, LocalDateTime incidentTime, LocalDateTime reportTime,
+            String reportDescription, String status) {
+        this.reportType = type;
+        this.reportName = name;
         this.location = location;
-        this.incidentTime = incidentTime;
-        this.reportTime = reportTime;
+        this.incidentDateTime = incidentTime;
+        this.reportDateTime = reportTime;
+        this.reportDescription = reportDescription;
+        this.status = status;
     }
 
     // Getter and setter methods for each instance variable
-    public String getType() {
-        return type;
+    public String getReportType() {
+        return reportType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setReportType(String type) {
+        this.reportType = type;
     }
 
-    public String getName() {
-        return name;
+    public String getReportName() {
+        return reportName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setReportName(String name) {
+        this.reportName = name;
     }
 
     public Location getLocation() {
@@ -45,20 +50,35 @@ public class Report {
         this.location = location;
     }
 
-    public LocalDateTime getIncidentTime() {
-        return incidentTime;
+    public LocalDateTime getIncidentDateTime() {
+        return incidentDateTime;
     }
 
-    public void setIncidentTime(LocalDateTime incidentTime) {
-        this.incidentTime = incidentTime;
+    public void setIncidentDateTime(LocalDateTime incidentTime) {
+        this.incidentDateTime = incidentTime;
     }
 
-    public LocalDateTime getReportTime() {
-        return reportTime;
+    public LocalDateTime getReportDateTime() {
+        return reportDateTime;
     }
 
-    public void setReportTime(LocalDateTime reportTime) {
-        this.reportTime = reportTime;
+    public void setReportDateTime(LocalDateTime reportTime) {
+        this.reportDateTime = reportTime;
     }
 
+    public String getReportDescription() {
+        return reportDescription;
+    }
+
+    public void setReportDescription(LocalDateTime reportTime) {
+        this.reportDateTime = reportTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

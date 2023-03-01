@@ -12,6 +12,7 @@ public class Location {
     // Constructor takes in latitude and longitude as strings
     public Location(String latitudeString, String longitudeString) {
         try {
+
             // Parse latitude and longitude strings as doubles
             this.latitude = Double.parseDouble(latitudeString);
             this.longitude = Double.parseDouble(longitudeString);

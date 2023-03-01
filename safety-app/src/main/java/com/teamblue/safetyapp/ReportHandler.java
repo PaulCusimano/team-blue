@@ -12,12 +12,14 @@ public class ReportHandler {
     public void handleReport(Report incidentReport) {
         // Do stuff with data.
         System.out.println("New report created:");
-        System.out.println("Type: " + incidentReport.getType());
-        System.out.println("Name: " + incidentReport.getName());
+        System.out.println("Name: " + incidentReport.getReportName());
+        System.out.println("Type: " + incidentReport.getReportType());
         System.out.println("Location: " + incidentReport.getLocation().getLatitude() + ", "
                 + incidentReport.getLocation().getLongitude());
-        System.out.println("Time of Incident: " + incidentReport.getIncidentTime());
-        System.out.println("Time of Report: " + incidentReport.getReportTime());
+        System.out.println("Time of Incident: " + incidentReport.getIncidentDateTime());
+        System.out.println("Time of Report: " + incidentReport.getReportDateTime());
+        System.out.println("Description:" + incidentReport.getReportDescription());
+        System.out.println("Status:" + incidentReport.getStatus());
     }
 
     public static void verification(int i) {

@@ -31,36 +31,51 @@ public class SafetyAppApplication {
 	 * 
 	 * It requires a request body which cannot easily be sent through browser input.
 	 * 
-	 * @param type         The type of the incident reported.
+	 * @param type             The type of the incident reported.
 	 * 
-	 * @param name         The name of the person reporting the incident.
+	 * @param name             The name of the person reporting the incident.
 	 * 
-	 * @param latitude     The latitude of the location where the incident occurred.
+	 * @param latitude         The latitude of the location where the incident
+	 *                         occurred.
 	 * 
-	 * @param longitude    The longitude of the location where the incident
-	 *                     occurred.
+	 * @param longitude        The longitude of the location where the incident
+	 *                         occurred.
 	 * 
-	 * @param incidentTime The date and time when the incident occurred. Must be in
-	 *                     yyyy-MM-dd HH:mm format.
+	 * @param incidentDateTime The date and time when the incident occurred. Must be
+	 *                         in
+	 *                         yyyy-MM-dd HH:mm format.
+	 * 
+	 * @param description      The description of the incident.
 	 * 
 	 * @return A message indicating that the report has been successfully created.
 	 */
 	@PostMapping("/MakeReport")
 	public String createReport(@RequestParam String type, @RequestParam String name, @RequestParam String latitude,
-			@RequestParam String longitude, @RequestParam String incidentTime) {
+			@RequestParam String longitude, @RequestParam String incidentDateTime,
+			@RequestParam String incidentDescription) {
+
+		String inputString = "LatLng(lat: 0, lng: 0)";
+		String[] parts = longitude.substring(7, longitude.length() - 1).split(", ");
+
+		latitude = parts[0].substring(4);
+		longitude = parts[1].substring(4);
 
 		// Convert the incidentTime string into a LocalDateTime object.
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		LocalDateTime incidentTimeFormatted = LocalDateTime.parse(incidentTime, formatter);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+		LocalDateTime incidentTimeFormatted = LocalDateTime.parse(incidentDateTime, formatter);
 
 		// Get the current time as the report time.
-		LocalDateTime reportTime = LocalDateTime.now();
+		LocalDateTime reportDateTime = LocalDateTime.now();
 
 		// Create a Location object using the latitude and longitude provided.
 		Location userLocation = new Location(latitude, longitude);
 
+		// New reports are open by default. Can be marked cleared upon resolution.
+		String status = "OPEN";
+
 		// Create a Report object with the information provided.
-		Report report = new Report(type, name, userLocation, incidentTimeFormatted, reportTime);
+		Report report = new Report(type, name, userLocation, incidentTimeFormatted, reportDateTime, incidentDescription,
+				status);
 
 		// Send the report to the ReportHandler to be processed.
 		ReportHandler reportHandler = new ReportHandler();
@@ -70,7 +85,7 @@ public class SafetyAppApplication {
 		return String.format("Report created successfully.");
 	}
 
-	// EXAMPLE METHODS OF HOW TO USE RESTAPIs
+	// VVV EXAMPLE METHODS OF HOW TO USE RESTAPIs VVV
 
 	/**
 	 * 
