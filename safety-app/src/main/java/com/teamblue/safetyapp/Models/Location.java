@@ -6,16 +6,16 @@ public class Location {
     // Store location as a Point2D object for easy access to x and y coordinates
     private Point2D.Double coordinates;
     // Store latitude and longitude as separate variables for easy initialization
-    private double latitude;
-    private double longitude;
+    private float latitude;
+    private float longitude;
 
     // Constructor takes in latitude and longitude as strings
-    public Location(String latitudeString, String longitudeString) {
+    public Location(Float latitudeFloat, Float longitudeFloat) {
         try {
 
             // Parse latitude and longitude strings as doubles
-            this.latitude = Double.parseDouble(latitudeString);
-            this.longitude = Double.parseDouble(longitudeString);
+            this.latitude = latitudeFloat;
+            this.longitude = longitudeFloat;
             // Store the coordinates as a Point2D object
             this.coordinates = new Point2D.Double(latitude, longitude);
         } catch (NumberFormatException e) {

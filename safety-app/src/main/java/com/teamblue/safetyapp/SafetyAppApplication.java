@@ -54,11 +54,13 @@ public class SafetyAppApplication {
 			@RequestParam String longitude, @RequestParam String incidentDateTime,
 			@RequestParam String incidentDescription) {
 
-		String inputString = "LatLng(lat: 0, lng: 0)";
 		String[] parts = longitude.substring(7, longitude.length() - 1).split(", ");
 
-		latitude = parts[0].substring(4);
-		longitude = parts[1].substring(4);
+		String latitudeString = parts[0].substring(4);
+		String longitudeString = parts[1].substring(4);
+
+		Float latitudeFloat = Float.parseFloat(latitudeString);
+		Float longitudeFloat = Float.parseFloat(longitudeString);
 
 		// Convert the incidentTime string into a LocalDateTime object.
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
@@ -68,7 +70,7 @@ public class SafetyAppApplication {
 		LocalDateTime reportDateTime = LocalDateTime.now();
 
 		// Create a Location object using the latitude and longitude provided.
-		Location userLocation = new Location(latitude, longitude);
+		Location userLocation = new Location(latitudeFloat, longitudeFloat);
 
 		// New reports are open by default. Can be marked cleared upon resolution.
 		String status = "OPEN";
