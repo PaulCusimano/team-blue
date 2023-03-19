@@ -1,37 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- This is a Maven POM (Project Object Model) file, which lists the project's dependencies and other configuration. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<!-- The parent element specifies the parent POM that this project inherits from. -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.0.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+	<!-- The group ID, artifact ID, version, name, and description of the project. -->
 	<groupId>com.teamblue</groupId>
 	<artifactId>safety-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Safety App</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
+		<!-- This specifies the version of Java to use. -->
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-websocket</artifactId>
-		</dependency>
+  <groupId>com.google.cloud</groupId>
+  <artifactId>google-cloud-firestore</artifactId>
+  <version>3.9.1</version>
+</dependency>
+			<dependencyManagement>
+		<dependencies>
+				<dependency>
+				<groupId>com.google.cloud</groupId>
+				<artifactId>libraries-bom</artifactId>
+				<version>20.6.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+				</dependency>
+			</dependencies>
+	</dependencyManagement>
 
+	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-firestore</artifactId>
 		</dependency>
-
+	</dependencies>
 
 		<dependency>
 			<groupId>com.google.firebase</groupId>
@@ -40,20 +52,63 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-firestore</artifactId>
+			<version>3.9.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-firestore-bom</artifactId>
+			<version>3.9.1</version>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-firestore-admin</artifactId>
+			<version>3.9.1</version>
+		</dependency>
+
+
+
+
+
+
+		<!-- This adds the Spring Boot web starter, which provides everything needed to build a web application. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<!-- This adds the Spring Boot starter for WebSocket, which provides everything needed to build a WebSocket application. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+		<!-- This adds the Spring Boot starter for testing, which provides everything needed to write and run tests. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- This adds the Firebase Admin SDK, which provides server-side APIs to interact with Firebase services. -->
+
+
+		<!-- This adds the Google Maps Services API, which provides server-side APIs to interact with Google Maps. -->
+		<dependency>
 			<groupId>com.google.maps</groupId>
 			<artifactId>google-maps-services</artifactId>
 			<version>0.15.0</version>
 		</dependency>
-
 	</dependencies>
-
+	<!-- This section configures the build process, including plugins that will be used to build and package the application. -->
 	<build>
 		<plugins>
+			<!-- This plugin builds the executable JAR file of the Spring Boot application. -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
