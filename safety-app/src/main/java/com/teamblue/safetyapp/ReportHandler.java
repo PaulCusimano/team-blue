@@ -22,6 +22,10 @@ public class ReportHandler {
         System.out.println("Status:" + incidentReport.getStatus());
     }
 
+    public static void filtering(string filter){
+        IncidentFilter filteringIncident = new IncidentFilter(); //calls incident filter to filter out the user report
+    }
+
     public static void verification(int i) {
 
         return;
