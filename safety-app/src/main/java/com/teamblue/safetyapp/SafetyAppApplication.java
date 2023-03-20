@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.teamblue.safetyapp.Models.Location;
+import com.teamblue.safetyapp.Models.Message;
 import com.teamblue.safetyapp.Models.Report;
 
 import org.springframework.boot.SpringApplication;
@@ -44,7 +45,7 @@ public class SafetyAppApplication {
 		// You must download the key file (in the discord) and save the path to it in
 		// here everytime you run the code
 		FileInputStream serviceAccount = new FileInputStream(
-				"C:\\Users\\hagri\\Desktop\\campus-safety-294f4-firebase-adminsdk-lc5oa-5c74129f44.json");
+				"C:\\Users\\cobkn\\OneDrive\\Desktop\\campus-safety-294f4-firebase-adminsdk-lc5oa-5c74129f44.json");
 
 		// FirebaseOptions options = FirebaseOptions.builder()
 		// .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -176,6 +177,12 @@ public class SafetyAppApplication {
 
 		// Return a message indicating that the report has been successfully created.
 		return String.format("Report created successfully.");
+	}
+
+	@PostMapping("/sendMessage")
+	public String sendMessage(@RequestParam String senderName, @RequestParam String message, @RequestParam String recieverName) {
+		Message userMessage = new Message(senderName, message, recieverName);
+		return String.format("Message recieved");
 	}
 
 	// VVV EXAMPLE METHODS OF HOW TO USE RESTAPIs VVV
