@@ -34,6 +34,13 @@
 	</dependencyManagement>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>technology.tabula</groupId>
+			<artifactId>tabula</artifactId>
+			<version>1.0.5</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-firestore</artifactId>
@@ -69,9 +76,6 @@
 			<artifactId>google-cloud-firestore-admin</artifactId>
 			<version>3.9.1</version>
 		</dependency>
-
-
-
 
 
 
