@@ -1,10 +1,9 @@
 package com.teamblue.safetyapp;
 
 import java.io.IOException;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +15,12 @@ import technology.tabula.writers.JSONWriter;
 
 public class DataConversion {
 
-    // Main method to run the code
-    public static void main(String[] args) throws IOException {
+    // Convert the first two pages of PDF and write to a CSV + JSON file
+    public static void convertPDF() throws IOException {
 
-        // Load the PDF file
-        File file = new File("team-blue\\safety-app\\src\\main\\resources\\PDcrimelog.pdf");
-        InputStream in = new FileInputStream(file);
+        // Load the PDF file from the URL
+        URL url = new URL("https://www.lsu.edu/police/files/crime-log/dcfr.pdf");
+        InputStream in = url.openStream();
 
         // Load the document and extract the tables
         try (PDDocument document = PDDocument.load(in);
@@ -32,11 +31,13 @@ public class DataConversion {
             PageIterator pi = oe.extract();
             List<Table> tables = new ArrayList<>();
 
-            // Iterate over the pages of the document
-            while (pi.hasNext()) {
+            // Iterate over the first two pages of the PDF file
+            int pageCount = 0;
+            while (pi.hasNext() && pageCount < 2) {
                 Page page = pi.next();
                 List<Table> pageTables = sea.extract(page);
                 tables.addAll(pageTables);
+                pageCount++;
             }
 
             // Convert the tables to JSON format and write to file
