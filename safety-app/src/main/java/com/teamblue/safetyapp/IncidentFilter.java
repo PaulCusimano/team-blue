@@ -1,15 +1,17 @@
 package com.teamblue.safetyapp;
 
+import java.io.IOException;
 //import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import com.teamblue.safetyapp.Models.Report;
 
 public class IncidentFilter {
-    public static void filterIncidents(Report data) {
+    public static void filterIncidents(Report data) throws IOException, InterruptedException, ExecutionException {
         // Send to Map Manager if incident is not a non-crime or e-crash
-        if (!(data.getReportType ().equals ("Non-Crime") || data.getReportType ().equals ("e-Crash"))) {
-            MapManager.sendToDatabase (data);
+        if (!(data.getReportType().equals("Non-Crime") || data.getReportType().equals("e-Crash"))) {
+            MapManager.sendToDatabase(data);
         }
     }
 }
