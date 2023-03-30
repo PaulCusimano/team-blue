@@ -45,18 +45,7 @@ public class SafetyAppApplication {
 		// You must download the key file (in the discord) and save the path to it in
 		// here everytime you run the code
 		FileInputStream serviceAccount = new FileInputStream(
-				"C:\\Users\\cobkn\\OneDrive\\Desktop\\campus-safety-294f4-firebase-adminsdk-lc5oa-5c74129f44.json");
-
-		// FirebaseOptions options = FirebaseOptions.builder()
-		// .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-		// .setProjectId("campus-safety-294f4")
-		// .build();
-
-		// FirebaseApp.initializeApp(options);
-
-		// Firestore firestore = FirestoreClient.getFirestore();
-		// DocumentSnapshot snapshot =
-		// firestore.collection("users").document("alice").get().get();
+				"C:\\Users\\hagri\\Desktop\\campus-safety-294f4-firebase-adminsdk-lc5oa-5c74129f44.json");
 
 		FirestoreOptions firestoreOptions = FirestoreOptions.getDefaultInstance().toBuilder()
 				.setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -64,56 +53,7 @@ public class SafetyAppApplication {
 				.build();
 		Firestore db = firestoreOptions.getService();
 
-		DocumentReference docRef = db.collection("users").document("aturing");
-		// Add document data with id "alovelace" using a hashmap
-		Map<String, Object> data = new HashMap<>();
-		data.put("first", "Alan");
-		data.put("last", "Turing");
-		data.put("born", 1912);
-		// asynchronously write data
-		ApiFuture<WriteResult> result = docRef.set(data);
-		// ...
-		// result.get() blocks on response
-		System.out.println("Update time : " + result.get().getUpdateTime());
-
-		// Add document data with auto-generated id.
-		// asynchronously retrieve all users
-		ApiFuture<QuerySnapshot> query = db.collection("users").get();
-		// ...
-		// query.get() blocks on response
-		String firstname = "null";
-		String lastname = "null";
-		Long born = null;
-
-		QuerySnapshot querySnapshot = query.get();
-		List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
-		for (QueryDocumentSnapshot document : documents) {
-			System.out.println("User: " + document.getId());
-			System.out.println("First: " + document.getString("first"));
-			if (document.contains("middle")) {
-				System.out.println("Middle: " + document.getString("middle"));
-			}
-			firstname = document.getString("first");
-			lastname = document.getString("last");
-			born = document.getLong("born");
-			System.out.println("Last: " + document.getString("last"));
-			System.out.println("Born: " + document.getLong("born"));
-		}
-
-		DocumentReference docuRef = db.collection("users").document("77FoxF6XLoYAOlGE06zGr94SZ7g2");
-		// asynchronously retrieve the document
-		ApiFuture<DocumentSnapshot> future = docuRef.get();
-		// ...
-		// future.get() blocks on response
-		DocumentSnapshot document = future.get();
-		if (document.exists()) {
-			System.out.println("Document data: " + document.getData());
-		} else {
-			System.out.println("No such document!");
-		}
-
 		SpringApplication.run(SafetyAppApplication.class, args);
-		System.out.println(firstname + " " + lastname + " " + born);
 	}
 
 	/**
@@ -144,8 +84,10 @@ public class SafetyAppApplication {
 	@PostMapping("/MakeReport")
 	public String createReport(@RequestParam String type, @RequestParam String name, @RequestParam String latitude,
 			@RequestParam String longitude, @RequestParam String incidentDateTime,
-			@RequestParam String incidentDescription, @RequestParam String reference) {
+			@RequestParam String incidentDescription, @RequestParam String referenceReport) {
 
+		System.out.println("Creating report...");
+		System.out.println(referenceReport);
 		String[] parts = longitude.substring(7, longitude.length() - 1).split(", ");
 
 		String latitudeString = parts[0].substring(4);
@@ -169,7 +111,7 @@ public class SafetyAppApplication {
 
 		// Create a Report object with the information provided.
 		Report report = new Report(type, name, userLocation, incidentTimeFormatted, reportDateTime, incidentDescription,
-				status, reference);
+				status, referenceReport);
 
 		// Send the report to the ReportHandler to be processed.
 		ReportHandler reportHandler = new ReportHandler();
