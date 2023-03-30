@@ -12,10 +12,11 @@ public class Report {
     private LocalDateTime reportDateTime;
     private String reportDescription;
     private String status;
+    private String reference;
 
     // Constructor
     public Report(String type, String name, Location location, LocalDateTime incidentTime, LocalDateTime reportTime,
-            String reportDescription, String status) {
+            String reportDescription, String status, String reference) {
         this.reportType = type;
         this.reportName = name;
         this.location = location;
@@ -23,6 +24,7 @@ public class Report {
         this.reportDateTime = reportTime;
         this.reportDescription = reportDescription;
         this.status = status;
+        this.reference = reference;
     }
 
     // Getter and setter methods for each instance variable
@@ -80,5 +82,13 @@ public class Report {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 }

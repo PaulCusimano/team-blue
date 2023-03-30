@@ -144,7 +144,7 @@ public class SafetyAppApplication {
 	@PostMapping("/MakeReport")
 	public String createReport(@RequestParam String type, @RequestParam String name, @RequestParam String latitude,
 			@RequestParam String longitude, @RequestParam String incidentDateTime,
-			@RequestParam String incidentDescription) {
+			@RequestParam String incidentDescription, @RequestParam String reference) {
 
 		String[] parts = longitude.substring(7, longitude.length() - 1).split(", ");
 
@@ -169,7 +169,7 @@ public class SafetyAppApplication {
 
 		// Create a Report object with the information provided.
 		Report report = new Report(type, name, userLocation, incidentTimeFormatted, reportDateTime, incidentDescription,
-				status);
+				status, reference);
 
 		// Send the report to the ReportHandler to be processed.
 		ReportHandler reportHandler = new ReportHandler();
@@ -180,7 +180,8 @@ public class SafetyAppApplication {
 	}
 
 	@PostMapping("/sendMessage")
-	public String sendMessage(@RequestParam String senderName, @RequestParam String message, @RequestParam String recieverName) {
+	public String sendMessage(@RequestParam String senderName, @RequestParam String message,
+			@RequestParam String recieverName) {
 		Message userMessage = new Message(senderName, message, recieverName);
 		return String.format("Message recieved");
 	}
