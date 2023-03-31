@@ -52,5 +52,8 @@ public class chatHandler {
 		data.put("user", reciever);
 		data.put("police", sender);
 		data.put("message", message);
+
+		ApiFuture<WriteResult> future = docRef.update(data);
+        future.get();
     }
 }
