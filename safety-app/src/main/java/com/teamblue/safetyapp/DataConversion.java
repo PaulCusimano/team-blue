@@ -20,6 +20,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.json.JSONArray;
@@ -38,7 +39,7 @@ import technology.tabula.writers.CSVWriter;
 import technology.tabula.writers.JSONWriter;
 
 public class DataConversion {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
         // String pdfUrl = "https://www.lsu.edu/police/files/crime-log/dcfr.pdf";
         String jsonFilePath = "safety-app\\src\\main\\resources\\JSONoutput.json";
         // convertPDFToCSV(pdfUrl, csvFilePath);
@@ -53,6 +54,7 @@ public class DataConversion {
                             report.getIncidentDateTime() + " " + report.getReportDateTime() + " "
                             + report.getReportDescription() + " " +
                             report.getStatus() + " " + report.getReference());
+            IncidentFilter.filterIncidents(report);
         }
 
     }
@@ -159,6 +161,7 @@ public class DataConversion {
                             break;
                         case 1:
                             report.setReportName(text);
+                            report.setReference("/reports/" + text);
                             break;
                         case 2:
                             report.setIncidentDateTime(convertStringToLocalDateTime(text));
@@ -184,9 +187,6 @@ public class DataConversion {
                             report.setLocation(convertToCoordinates(text));
                             System.out.println(report.getLocation());
                             break;
-                        case 8:
-                            report.setReference(text);
-                            break;
                     }
 
                 }
@@ -201,7 +201,7 @@ public class DataConversion {
         System.out.println(URLEncoder.encode(semanticLocation, "UTF-8"));
         String requestURL = "https://maps.googleapis.com/maps/api/geocode/json?address="
                 + URLEncoder.encode(semanticLocation, "UTF-8")
-                + ",+Baton+Rouge,+LA&key=<API_KEY>";
+                + ",+Baton+Rouge,+LA&key=AIzaSyCoqncEOlFW6r-JsTC6aj1HqowYVQyLEAY    ";
 
         // 3279+Dalrymple+Dr,+Baton+Rouge,+LA
         // Send the request to the API and retrieve the response
