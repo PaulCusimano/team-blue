@@ -27,6 +27,9 @@ public class Report {
         this.reference = reference;
     }
 
+    public Report() {
+    }
+
     // Getter and setter methods for each instance variable
     public String getReportType() {
         return reportType;
