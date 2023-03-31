@@ -38,7 +38,7 @@ public class chatHandler {
         
 
 		FileInputStream serviceAccount = new FileInputStream(
-				"C:\\Users\\cobkn\\OneDrive\\Desktop\\campus-safety-294f4-firebase-adminsdk-lc5oa-5c74129f44.json");
+				"C:\\Users\\hagri\\Desktop\\campus-safety-294f4-firebase-adminsdk-lc5oa-5c74129f44.json");
 
 		FirestoreOptions firestoreOptions = FirestoreOptions.getDefaultInstance().toBuilder()
 				.setCredentials(GoogleCredentials.fromStream(serviceAccount))
