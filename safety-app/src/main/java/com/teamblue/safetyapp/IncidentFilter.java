@@ -10,7 +10,7 @@ import com.teamblue.safetyapp.Models.Report;
 public class IncidentFilter {
     public static void filterIncidents(Report data) throws IOException, InterruptedException, ExecutionException {
         // Send to Map Manager if incident is not a non-crime or e-crash
-        if (!(data.getReportType().equals("Non-Crime") || data.getReportType().equals("e-Crash"))) {
+        if (!(data.getReportType().equals("Non-Crime") || data.getReportType().equals("eCrash"))) {
             MapManager.sendToDatabase(data);
         }
     }

@@ -21,6 +21,14 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+	
+<dependency>
+    <groupId>com.opencsv</groupId>
+    <artifactId>opencsv</artifactId>
+    <version>4.1</version>
+</dependency>
+
+
 
 		<dependency>
 			<groupId>technology.tabula</groupId>
@@ -51,6 +59,8 @@
 			</dependencies>
 	</dependencyManagement>
 
+
+
 	<dependencies>
 	
 
@@ -61,6 +71,11 @@
 			<artifactId>google-cloud-firestore</artifactId>
 		</dependency>
 	</dependencies>
+<dependency>
+  <groupId>org.json</groupId>
+  <artifactId>json</artifactId>
+  <version>20211205</version>
+</dependency>
 
 
 

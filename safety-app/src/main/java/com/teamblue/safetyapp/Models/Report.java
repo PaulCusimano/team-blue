@@ -75,8 +75,8 @@ public class Report {
         return reportDescription;
     }
 
-    public void setReportDescription(LocalDateTime reportTime) {
-        this.reportDateTime = reportTime;
+    public void setReportDescription(String reportDescription) {
+        this.reportDescription = reportDescription;
     }
 
     public String getStatus() {
