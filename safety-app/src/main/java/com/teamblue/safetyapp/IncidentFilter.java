@@ -51,6 +51,10 @@ public class IncidentFilter {
             ReportData.put("status", data.getStatus());
             ReportData.put("location", location);
             ReportData.put("reportDateTime", date);
+            ReportData.put("incidentDateTime", date);
+            ReportData.put("reportUser", "LSUPD");
+            ReportData.put("reporterEmail", "lsupd@lsu.edu");
+            ReportData.put("nearCampus", true);
 
             ApiFuture<WriteResult> future = docRef.update(ReportData);
             future.get();
