@@ -12,6 +12,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.FirestoreOptions;
+import com.google.cloud.firestore.GeoPoint;
 import com.google.cloud.firestore.WriteResult;
 import com.teamblue.safetyapp.Models.Report;
 
@@ -33,10 +34,13 @@ public class MapManager {
 
         Firestore db = firestoreOptions.getService();
 
+        GeoPoint location = new GeoPoint(report.getLocation().getLatitude(), report.getLocation().getLongitude());
+
         Map<String, Object> data = new HashMap<>();
-        data.put("latitude", report.getLocation().getLatitude());
-        data.put("longitutde", report.getLocation().getLongitude());
-        data.put("relatedReport", report.getReportDescription());
+        data.put("IncidentLocations", location);
+        data.put("IncidentDescription", report);
+        data.put("relatedReport", report.getReference());
+
         // asynchronously write data
         ApiFuture<DocumentReference> docRef = db.collection("locations_document").add(data);
         // Add document data from report using a hashmap
