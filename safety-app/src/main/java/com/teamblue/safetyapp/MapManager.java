@@ -25,7 +25,7 @@ public class MapManager {
         // put the report in location DB
 
         FileInputStream serviceAccount = new FileInputStream(
-                "C:\\Users\\cobkn\\OneDrive\\Desktop\\campus-safety-294f4-firebase-adminsdk-lc5oa-5c74129f44.json");
+                "C:\\Users\\hagri\\Desktop\\campus-safety-294f4-firebase-adminsdk-lc5oa-5c74129f44.json");
 
         FirestoreOptions firestoreOptions = FirestoreOptions.getDefaultInstance().toBuilder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -36,14 +36,15 @@ public class MapManager {
 
         GeoPoint location = new GeoPoint(report.getLocation().getLatitude(), report.getLocation().getLongitude());
 
+        // asynchronously write data
+        DocumentReference docRef = db.collection("locations_document").document(report.getReportName());
+
         Map<String, Object> data = new HashMap<>();
         data.put("IncidentLocations", location);
         data.put("IncidentDescription", report);
         data.put("relatedReport", report.getReference());
 
-        // asynchronously write data
-        ApiFuture<DocumentReference> docRef = db.collection("locations_document").add(data);
-        // Add document data from report using a hashmap
+        docRef.set(data);
 
     }
 }

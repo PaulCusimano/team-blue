@@ -2,10 +2,11 @@ package com.teamblue.safetyapp;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.HashMap;
 //import java.io.IOException;
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.concurrent.ExecutionException;
 
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.Date;
+import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.FirestoreOptions;
@@ -24,7 +27,7 @@ import com.teamblue.safetyapp.Models.Report;
 public class IncidentFilter {
     public static void filterIncidents(Report data) throws IOException, InterruptedException, ExecutionException {
         if (!(data.getReportType().equals("Non-Crime") || data.getReportType().equals("eCrash"))) {
-
+            // MapManager.sendToDatabase(data);
             FileInputStream serviceAccount = new FileInputStream(
                     "C:\\Users\\hagri\\Desktop\\campus-safety-294f4-firebase-adminsdk-lc5oa-5c74129f44.json");
             // C:\\Users\\hagri\\Desktop\\campus-safety-294f4-firebase-adminsdk-lc5oa-5c74129f44.json
@@ -37,10 +40,12 @@ public class IncidentFilter {
             GeoPoint location = new GeoPoint(data.getLocation().getLatitude(), data.getLocation().getLongitude());
 
             LocalDateTime localDateTime = data.getReportDateTime();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String formattedDateTime = localDateTime.format(formatter);
-            ZonedDateTime zonedDateTime = ZonedDateTime.parse(formattedDateTime, formatter);
-            Date date = Date.from(zonedDateTime.toInstant());
+            Instant instant = localDateTime.toInstant(ZoneOffset.UTC);
+            Timestamp timestamp = Timestamp.ofTimeSecondsAndNanos(instant.getEpochSecond(), instant.getNano());
+
+            LocalDateTime incidentDateTime = data.getIncidentDateTime();
+            Instant instantIncident = incidentDateTime.toInstant(ZoneOffset.UTC);
+            Timestamp incidentTimestamp = Timestamp.ofTimeSecondsAndNanos(instant.getEpochSecond(), instant.getNano());
 
             DocumentReference docRef = db.collection("reports").document(data.getReportName());
 
@@ -50,17 +55,16 @@ public class IncidentFilter {
             ReportData.put("reportType", data.getReportType());
             ReportData.put("status", data.getStatus());
             ReportData.put("location", location);
-            ReportData.put("reportDateTime", date);
-            ReportData.put("incidentDateTime", date);
+            ReportData.put("reportDateTime", timestamp);
+            ReportData.put("incidentDateTime", incidentTimestamp);
             ReportData.put("reportUser", "LSUPD");
             ReportData.put("reporterEmail", "lsupd@lsu.edu");
             ReportData.put("nearCampus", true);
 
-            ApiFuture<WriteResult> future = docRef.update(ReportData);
+            ApiFuture<WriteResult> future = docRef.set(ReportData);
             future.get();
 
             // Send to Map Manager if incident is not a non-crime or e-crash
-            // MapManager.sendToDatabase(data);
         }
     }
 }
