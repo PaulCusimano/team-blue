@@ -13,6 +13,7 @@ public class Report {
     private String reportDescription;
     private String status;
     private String reference;
+    private String semanticLocation;
 
     // Constructor
     public Report(String type, String name, Location location, LocalDateTime incidentTime, LocalDateTime reportTime,
@@ -93,5 +94,13 @@ public class Report {
 
     public void setReference(String reference) {
         this.reference = reference;
+    }
+
+    public String getSemanticLocation() {
+        return semanticLocation;
+    }
+
+    public void setSemanticLocation(String semanticLocation) {
+        this.semanticLocation = semanticLocation;
     }
 }

@@ -40,9 +40,9 @@ import technology.tabula.writers.JSONWriter;
 
 public class DataConversion {
     public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
-        // String pdfUrl = "https://www.lsu.edu/police/files/crime-log/dcfr.pdf";
+        String pdfUrl = "https://www.lsu.edu/police/files/crime-log/dcfr.pdf";
         String jsonFilePath = "safety-app\\src\\main\\resources\\JSONoutput.json";
-        // convertPDFToCSV(pdfUrl, csvFilePath);
+        convertPDFToCSV(pdfUrl, jsonFilePath);
 
         List<Report> reports = readJSON(jsonFilePath);
 
@@ -53,7 +53,8 @@ public class DataConversion {
 
             System.out
                     .println(report.getReportType() + " " + report.getReportName() + " "
-                            + report.getLocation().getLatitude() + " " + report.getLocation().getLatitude() + " " +
+                            + report.getLocation().getLatitude() + " " +
+                            report.getLocation().getLatitude() + " " +
                             report.getIncidentDateTime() + " " + report.getReportDateTime() + " "
                             + report.getReportDescription() + " " +
                             report.getStatus() + " " + report.getReference());
@@ -196,6 +197,7 @@ public class DataConversion {
                             }
                             break;
                         case 7:
+                            report.setSemanticLocation(text);
                             report.setLocation(convertToCoordinates(text));
                             System.out.println(report.getLocation());
                             break;
