@@ -46,14 +46,14 @@ public class chatHandler {
 				.build();
 		Firestore db = firestoreOptions.getService();
 
-		DocumentReference docRef = db.collection("chats").document("doc.id");
+		CollectionReference docRef = db.collection("chats").document("doc.id").collection("messages");
 
 		Map<String, Object> data = new HashMap<>();
 		data.put("user", reciever);
 		data.put("police", sender);
 		data.put("message", message);
 
-		ApiFuture<WriteResult> future = docRef.update(data);
-        future.get();
+		//ApiFuture<WriteResult> future = docRef.set(data);
+        //future.get();
     }
 }
