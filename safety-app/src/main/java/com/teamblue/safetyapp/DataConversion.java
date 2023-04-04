@@ -42,7 +42,7 @@ public class DataConversion {
     public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
         String pdfUrl = "https://www.lsu.edu/police/files/crime-log/dcfr.pdf";
         String jsonFilePath = "safety-app\\src\\main\\resources\\JSONoutput.json";
-        convertPDFToCSV(pdfUrl, jsonFilePath);
+        // convertPDFToCSV(pdfUrl, jsonFilePath);
 
         List<Report> reports = readJSON(jsonFilePath);
 

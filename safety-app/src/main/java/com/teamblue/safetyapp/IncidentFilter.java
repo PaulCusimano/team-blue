@@ -28,14 +28,8 @@ public class IncidentFilter {
     public static void filterIncidents(Report data) throws IOException, InterruptedException, ExecutionException {
         if (!(data.getReportType().equals("Non-Crime") || data.getReportType().equals("eCrash"))) {
             // MapManager.sendToDatabase(data);
-            FileInputStream serviceAccount = new FileInputStream(
-                    "C:\\Users\\hagri\\Desktop\\campus-safety-294f4-firebase-adminsdk-lc5oa-5c74129f44.json");
-            // C:\\Users\\hagri\\Desktop\\campus-safety-294f4-firebase-adminsdk-lc5oa-5c74129f44.json
-            FirestoreOptions firestoreOptions = FirestoreOptions.getDefaultInstance().toBuilder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setProjectId("campus-safety-294f4")
-                    .build();
-            Firestore db = firestoreOptions.getService();
+
+            Firestore db = FirestoreDatabase.getFirestore();
 
             GeoPoint location = new GeoPoint(data.getLocation().getLatitude(), data.getLocation().getLongitude());
 
