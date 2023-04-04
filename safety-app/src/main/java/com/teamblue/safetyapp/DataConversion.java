@@ -46,7 +46,7 @@ public class DataConversion {
 
         List<Report> reports = readJSON(jsonFilePath);
 
-        System.out.println("Beginning repor upload...");
+        System.out.println("Beginning report upload...");
 
         for (Report report : reports) {
             Thread.sleep(50);
