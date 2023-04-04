@@ -32,13 +32,8 @@ public class LocationValidation {
 
     public void saveNearCampusToFirestore(boolean nearCampus)
             throws IOException, InterruptedException, ExecutionException {
-        FileInputStream serviceAccount = new FileInputStream("C:\\Users\\cobkn\\OneDrive\\Desktop\\campus-safety-294f4-firebase-adminsdk-lc5oa-5c74129f44.json");
-
-        FirestoreOptions firestoreOptions = FirestoreOptions.getDefaultInstance().toBuilder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setProjectId("campus-safety-294f4")
-                .build();
-        Firestore db = firestoreOptions.getService();
+                
+        Firestore db = FirestoreDatabase.getFirestore();
 
         DocumentReference docRef = db.collection("reports").document(reference);
 
