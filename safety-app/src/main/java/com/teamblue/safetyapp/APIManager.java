@@ -39,7 +39,7 @@ import java.time.format.DateTimeFormatter;
 
 @SpringBootApplication
 @RestController
-public class SafetyAppApplication {
+public class APIManager {
 
 	public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
 		// You must download the key file (in the discord) and save the path to it in
@@ -53,7 +53,7 @@ public class SafetyAppApplication {
 				.build();
 		Firestore db = firestoreOptions.getService();
 
-		SpringApplication.run(SafetyAppApplication.class, args);
+		SpringApplication.run(APIManager.class, args);
 	}
 
 	/**
@@ -126,67 +126,6 @@ public class SafetyAppApplication {
 			@RequestParam String recieverName) {
 		Message userMessage = new Message(senderName, message, recieverName);
 		return String.format("Message recieved");
-	}
-
-	// VVV EXAMPLE METHODS OF HOW TO USE RESTAPIs VVV
-
-	/**
-	 * 
-	 * GET request for returning a greeting with a name.
-	 * 
-	 * @param name The name to include in the greeting. Defaults to "World" if not
-	 *             provided.
-	 * @return A greeting with the provided name.
-	 */
-	@GetMapping("/hello")
-	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return String.format("Hello %s!", name);
-	}
-
-	/**
-	 * 
-	 * GET request for multiplying a number by 5.
-	 * 
-	 * @param number The number to multiply. Defaults to 5 if not provided.
-	 * @return The provided number multiplied by 5.
-	 */
-	@GetMapping("/multiply")
-	public String multiply(@RequestParam(value = "number", defaultValue = "5") int number) {
-		number = number * 5;
-		return String.format("Here is your value multiplied by 5: %s", number);
-	}
-
-	/**
-	 * 
-	 * GET request for adding two numbers together.
-	 * 
-	 * @param num1 The first number to add.
-	 * 
-	 * @param num2 The second number to add.
-	 * 
-	 * @return The sum of the two provided numbers.
-	 */
-	@RequestMapping(value = "/sum", method = RequestMethod.GET)
-	public ResponseEntity<Integer> getSum(@RequestParam("num1") int num1, @RequestParam("num2") int num2) {
-
-		int sum = num1 + num2;
-		return new ResponseEntity<Integer>(sum, HttpStatus.OK);
-	}
-
-	/**
-	 * 
-	 * GET request for adding a list of numbers together.
-	 * 
-	 * @param numbers A list of numbers to add together, separated by commas.
-	 * @return The sum of the provided numbers.
-	 */
-	@RequestMapping(value = "/ArrSum", method = RequestMethod.GET)
-	public ResponseEntity<Integer> getArraySum(@RequestParam(value = "numbers") List<Integer> numbers) {
-		int sum = 0;
-		for (int number : numbers) {
-			sum += number;
-		}
-		return new ResponseEntity<Integer>(sum, HttpStatus.OK);
 	}
 	// END OF EXAMPLE METHODS
 }
