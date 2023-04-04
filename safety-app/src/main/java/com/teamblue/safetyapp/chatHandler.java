@@ -1,6 +1,5 @@
 package com.teamblue.safetyapp;
 
-
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -27,15 +26,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class chatHandler {
-    private static String sender =  "bob";
-    private static String reciever = "George";
-    private static String message = "Hello";
+	private static String sender = "bob";
+	private static String reciever = "George";
+	private static String message = "Hello";
 
+	public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
 
-    public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
-
-        //Message userMessage = new Message(sender, message, reciever);
-        
+		// Message userMessage = new Message(sender, message, reciever);
 
 		FileInputStream serviceAccount = new FileInputStream(
 				"C:\\Users\\hagri\\Desktop\\campus-safety-294f4-firebase-adminsdk-lc5oa-5c74129f44.json");

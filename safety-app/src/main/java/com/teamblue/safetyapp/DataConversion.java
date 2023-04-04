@@ -40,21 +40,33 @@ import technology.tabula.writers.JSONWriter;
 
 public class DataConversion {
     public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
-        // String pdfUrl = "https://www.lsu.edu/police/files/crime-log/dcfr.pdf";
+        String pdfUrl = "https://www.lsu.edu/police/files/crime-log/dcfr.pdf";
         String jsonFilePath = "safety-app\\src\\main\\resources\\JSONoutput.json";
-        // convertPDFToCSV(pdfUrl, csvFilePath);
+        convertPDFToCSV(pdfUrl, jsonFilePath);
 
         List<Report> reports = readJSON(jsonFilePath);
 
+        System.out.println("Beginning report upload...");
+
         for (Report report : reports) {
+            Thread.sleep(50);
 
             System.out
                     .println(report.getReportType() + " " + report.getReportName() + " "
-                            + report.getLocation().getLatitude() + " " + report.getLocation().getLatitude() + " " +
+                            + report.getLocation().getLatitude() + " " +
+                            report.getLocation().getLatitude() + " " +
                             report.getIncidentDateTime() + " " + report.getReportDateTime() + " "
                             + report.getReportDescription() + " " +
                             report.getStatus() + " " + report.getReference());
-            IncidentFilter.filterIncidents(report);
+
+            if (!(report.getReportName() == null || report.getReportType() == null
+                    || report.getLocation() == null
+                    || report.getIncidentDateTime() == null || report.getReportDateTime() == null)) {
+                System.out.println("Valid Report");
+                IncidentFilter.filterIncidents(report);
+            }
+            System.out.println("------------------------");
+
         }
 
     }
@@ -131,6 +143,7 @@ public class DataConversion {
     // }
 
     public static List<Report> readJSON(String jsonFilePath) throws IOException {
+
         List<Report> reports = new ArrayList<>();
         String jsonString = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
         JSONArray jsonArray = new JSONArray(jsonString);
@@ -184,11 +197,11 @@ public class DataConversion {
                             }
                             break;
                         case 7:
+                            report.setSemanticLocation(text);
                             report.setLocation(convertToCoordinates(text));
                             System.out.println(report.getLocation());
                             break;
                     }
-
                 }
             }
             reports.add(report);
@@ -197,6 +210,7 @@ public class DataConversion {
     }
 
     public static Location convertToCoordinates(String semanticLocation) throws IOException {
+
         // Create a URL for the Google Maps Geocoding API request
         System.out.println(URLEncoder.encode(semanticLocation, "UTF-8"));
         String requestURL = "https://maps.googleapis.com/maps/api/geocode/json?address="
