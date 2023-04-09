@@ -29,6 +29,9 @@ public class IncidentFilter {
         if (!(data.getReportType().equals("Non-Crime") || data.getReportType().equals("eCrash"))) {
             // MapManager.sendToDatabase(data);
 
+            LocationValidation locationValidation = new LocationValidation(data.getLocation().getLatitude(),
+                    data.getLocation().getLongitude(), data.getReportName());
+
             Firestore db = FirestoreDatabase.getFirestore();
 
             GeoPoint location = new GeoPoint(data.getLocation().getLatitude(), data.getLocation().getLongitude());
@@ -55,7 +58,7 @@ public class IncidentFilter {
             ReportData.put("incidentDateTime", incidentTimestamp);
             ReportData.put("reportUser", userRef);
             ReportData.put("reporterEmail", "lsupd@lsu.edu");
-            ReportData.put("nearCampus", true);
+            ReportData.put("nearCampus", locationValidation.isLocationValid());
             ReportData.put("SemanticLocation", data.getSemanticLocation());
 
             ApiFuture<WriteResult> future = docRef.set(ReportData);

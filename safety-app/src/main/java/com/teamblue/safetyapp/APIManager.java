@@ -1,38 +1,14 @@
 package com.teamblue.safetyapp;
 
-import com.google.api.core.ApiFuture;
-import com.google.api.core.ApiFutures;
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.firestore.CollectionReference;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.FirestoreOptions;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
-import com.google.cloud.firestore.WriteResult;
-import com.google.cloud.firestore.v1.FirestoreClient;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import com.teamblue.safetyapp.Models.Location;
 import com.teamblue.safetyapp.Models.Message;
 import com.teamblue.safetyapp.Models.Report;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -42,18 +18,13 @@ import java.time.format.DateTimeFormatter;
 public class APIManager {
 
 	public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
-		// You must download the key file (in the discord) and save the path to it in
-		// here everytime you run the code
-		FileInputStream serviceAccount = new FileInputStream(
-				"C:\\Users\\hagri\\Desktop\\campus-safety-294f4-firebase-adminsdk-lc5oa-5c74129f44.json");
 
-		FirestoreOptions firestoreOptions = FirestoreOptions.getDefaultInstance().toBuilder()
-				.setCredentials(GoogleCredentials.fromStream(serviceAccount))
-				.setProjectId("campus-safety-294f4")
-				.build();
-		Firestore db = firestoreOptions.getService();
-
+		// Start the Spring Boot application, which waits for any reports or messages.
 		SpringApplication.run(APIManager.class, args);
+
+		// Whenever program is started, it will run the DataConversion and load all the
+		// latest reports into the database.
+		DataConversion.main(args);
 	}
 
 	/**
@@ -123,9 +94,15 @@ public class APIManager {
 
 	@PostMapping("/sendMessage")
 	public String sendMessage(@RequestParam String senderName, @RequestParam String message,
-			@RequestParam String recieverName) {
-		Message userMessage = new Message(senderName, message, recieverName);
-		return String.format("Message recieved");
+			@RequestParam String receiverName) {
+		Message userMessage = new Message(senderName, message, receiverName);
+		return String.format("Message received");
 	}
-	// END OF EXAMPLE METHODS
+
+	@GetMapping("/receiveMessage")
+	public String receiveMessage(@RequestParam String receiverName) {
+		chatHandler chatHandler = new chatHandler();
+		return "temp";
+	}
+
 }

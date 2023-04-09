@@ -111,36 +111,36 @@ public class DataConversion {
         }
     }
 
-    // public static List<Report> readCSV(String csvFilePath) throws IOException {
-    // List<Report> reports = new ArrayList<>();
+    public static List<Report> readCSV(String csvFilePath) throws IOException {
+        List<Report> reports = new ArrayList<>();
 
-    // try (Reader reader = new FileReader(csvFilePath);
-    // CSVReader csvReader = new CSVReaderBuilder(reader)
-    // .withSkipLines(1)
-    // .withCSVParser(new CSVParserBuilder().withSeparator(',').build())
-    // .withVerifyReader(false)
-    // .build()) {
-    // String[] line;
-    // while ((line = csvReader.readNext()) != null) {
-    // System.out.println(Arrays.toString(line));
-    // String reportType = line[4];
-    // String reportName = "LSUPD Report";
-    // Location location = convertToCoordinates(line[7]);
-    // LocalDateTime incidentDate = convertStringToLocalDateTime(line[3]);
-    // LocalDateTime reportDate = convertStringToLocalDateTime(line[1]);
-    // String reportDescription = line[6];
-    // String status = line[8];
-    // String reference = line[2];
+        try (Reader reader = new FileReader(csvFilePath);
+                CSVReader csvReader = new CSVReaderBuilder(reader)
+                        .withSkipLines(1)
+                        .withCSVParser(new CSVParserBuilder().withSeparator(',').build())
+                        .withVerifyReader(false)
+                        .build()) {
+            String[] line;
+            while ((line = csvReader.readNext()) != null) {
+                System.out.println(Arrays.toString(line));
+                String reportType = line[4];
+                String reportName = "LSUPD Report";
+                Location location = convertToCoordinates(line[7]);
+                LocalDateTime incidentDate = convertStringToLocalDateTime(line[3]);
+                LocalDateTime reportDate = convertStringToLocalDateTime(line[1]);
+                String reportDescription = line[6];
+                String status = line[8];
+                String reference = line[2];
 
-    // Report report = new Report(reportType, reportName, location, incidentDate,
-    // reportDate,
-    // reportDescription,
-    // status, reference);
-    // reports.add(report);
-    // }
-    // }
-    // return reports;
-    // }
+                Report report = new Report(reportType, reportName, location, incidentDate,
+                        reportDate,
+                        reportDescription,
+                        status, reference);
+                reports.add(report);
+            }
+        }
+        return reports;
+    }
 
     public static List<Report> readJSON(String jsonFilePath) throws IOException {
 
