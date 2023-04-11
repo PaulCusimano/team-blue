@@ -42,7 +42,7 @@ public class DataConversion {
     public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
         String pdfUrl = "https://www.lsu.edu/police/files/crime-log/dcfr.pdf";
         String jsonFilePath = "safety-app\\src\\main\\resources\\JSONoutput.json";
-        // convertPDFToCSV(pdfUrl, jsonFilePath);
+        convertPDF(pdfUrl, jsonFilePath);
 
         List<Report> reports = readJSON(jsonFilePath);
 
@@ -50,20 +50,32 @@ public class DataConversion {
 
         for (Report report : reports) {
             Thread.sleep(50);
+
+            System.out
+                    .println(report.getReportType() + " " + report.getReportName() + " "
+                            + report.getLocation().getLatitude() + " " +
+                            report.getLocation().getLatitude() + " " +
+                            report.getIncidentDateTime() + " " + report.getReportDateTime() + " "
+                            + report.getReportDescription() + " " +
+                            report.getStatus() + " " + report.getReference());
+
             if (!(report.getReportName() == null || report.getReportType() == null
                     || report.getLocation() == null
                     || report.getIncidentDateTime() == null || report.getReportDateTime() == null)) {
+                System.out.println("Valid Report");
                 IncidentFilter.filterIncidents(report);
             }
+            System.out.println("------------------------");
+
         }
 
     }
 
     // Convert the first two pages of PDF and write to a CSV + JSON file
-    public static void convertPDFToCSV(String pdfUrl, String csvFilePath) throws IOException {
+    public static void convertPDF(String pdfUrl, String jsonFilePath) throws IOException {
 
         // Load the PDF file from the URL
-        URL url = new URL("https://www.lsu.edu/police/files/crime-log/dcfr.pdf");
+        URL url = new URL(pdfUrl);
         InputStream in = url.openStream();
 
         // Load the document and extract the tables
