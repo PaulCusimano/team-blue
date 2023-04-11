@@ -23,12 +23,7 @@ public class chatHandler {
     public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
 
         // Initialize Firebase
-        FileInputStream serviceAccount = new FileInputStream("C:\\Users\\hagri\\Desktop\\campus-safety-294f4-firebase-adminsdk-lc5oa-5c74129f44.json");
-        GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
-        FirestoreOptions options = FirestoreOptions.newBuilder()
-                .setCredentials(credentials)
-                .build();
-        Firestore db = options.getService();
+        Firestore db = FirestoreDatabase.getFirestore();
 
         // Create a new document in "chats" collection with an automatically generated
         // ID
