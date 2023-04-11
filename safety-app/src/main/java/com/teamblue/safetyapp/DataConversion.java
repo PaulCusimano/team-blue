@@ -50,23 +50,11 @@ public class DataConversion {
 
         for (Report report : reports) {
             Thread.sleep(50);
-
-            System.out
-                    .println(report.getReportType() + " " + report.getReportName() + " "
-                            + report.getLocation().getLatitude() + " " +
-                            report.getLocation().getLatitude() + " " +
-                            report.getIncidentDateTime() + " " + report.getReportDateTime() + " "
-                            + report.getReportDescription() + " " +
-                            report.getStatus() + " " + report.getReference());
-
             if (!(report.getReportName() == null || report.getReportType() == null
                     || report.getLocation() == null
                     || report.getIncidentDateTime() == null || report.getReportDateTime() == null)) {
-                System.out.println("Valid Report");
                 IncidentFilter.filterIncidents(report);
             }
-            System.out.println("------------------------");
-
         }
 
     }
