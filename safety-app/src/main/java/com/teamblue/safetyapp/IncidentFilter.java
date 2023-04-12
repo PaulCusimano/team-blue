@@ -32,6 +32,8 @@ public class IncidentFilter {
             LocationValidation locationValidation = new LocationValidation(data.getLocation().getLatitude(),
                     data.getLocation().getLongitude(), data.getReportName());
 
+            LocationValidation.validateLocation(data);
+
             Firestore db = FirestoreDatabase.getFirestore();
 
             GeoPoint location = new GeoPoint(data.getLocation().getLatitude(), data.getLocation().getLongitude());

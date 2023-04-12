@@ -44,4 +44,13 @@ public class LocationValidation {
         System.out.println("nearCampus: " + nearCampus);
     }
 
+    public static void validateLocation(Report report) throws IOException, InterruptedException, ExecutionException {
+        double longitude = report.getLocation().getLongitude();
+        double latitude = report.getLocation().getLatitude();
+        String reference = report.getReference();
+
+        LocationValidation locationValidation = new LocationValidation(latitude, longitude, reference);
+        boolean nearCampus = locationValidation.isLocationValid();
+        locationValidation.saveNearCampusToFirestore(nearCampus);
+    }
 }
