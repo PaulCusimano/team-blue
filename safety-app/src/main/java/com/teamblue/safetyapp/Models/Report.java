@@ -3,7 +3,6 @@ package com.teamblue.safetyapp.Models;
 import java.time.LocalDateTime;
 
 public class Report {
-
     // Instance variables
     private String reportType;
     private String reportName;
@@ -16,91 +15,117 @@ public class Report {
     private String semanticLocation;
 
     // Constructor
-    public Report(String type, String name, Location location, LocalDateTime incidentTime, LocalDateTime reportTime,
-            String reportDescription, String status, String reference) {
-        this.reportType = type;
-        this.reportName = name;
-        this.location = location;
-        this.incidentDateTime = incidentTime;
-        this.reportDateTime = reportTime;
-        this.reportDescription = reportDescription;
-        this.status = status;
-        this.reference = reference;
+    private Report(Builder builder) {
+        this.reportType = builder.reportType;
+        this.reportName = builder.reportName;
+        this.location = builder.location;
+        this.incidentDateTime = builder.incidentDateTime;
+        this.reportDateTime = builder.reportDateTime;
+        this.reportDescription = builder.reportDescription;
+        this.status = builder.status;
+        this.reference = builder.reference;
+        this.semanticLocation = builder.semanticLocation;
     }
 
-    public Report() {
-    }
-
-    // Getter and setter methods for each instance variable
     public String getReportType() {
         return reportType;
-    }
-
-    public void setReportType(String type) {
-        this.reportType = type;
     }
 
     public String getReportName() {
         return reportName;
     }
 
-    public void setReportName(String name) {
-        this.reportName = name;
-    }
-
     public Location getLocation() {
         return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
     }
 
     public LocalDateTime getIncidentDateTime() {
         return incidentDateTime;
     }
 
-    public void setIncidentDateTime(LocalDateTime incidentTime) {
-        this.incidentDateTime = incidentTime;
-    }
-
     public LocalDateTime getReportDateTime() {
         return reportDateTime;
-    }
-
-    public void setReportDateTime(LocalDateTime reportTime) {
-        this.reportDateTime = reportTime;
     }
 
     public String getReportDescription() {
         return reportDescription;
     }
 
-    public void setReportDescription(String reportDescription) {
-        this.reportDescription = reportDescription;
-    }
-
     public String getStatus() {
         return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getReference() {
         return reference;
     }
 
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
-
     public String getSemanticLocation() {
         return semanticLocation;
     }
 
-    public void setSemanticLocation(String semanticLocation) {
-        this.semanticLocation = semanticLocation;
+    public static class Builder {
+        // Instance variables
+        private String reportType;
+        private String reportName;
+        private Location location;
+        private LocalDateTime incidentDateTime;
+        private LocalDateTime reportDateTime;
+        private String reportDescription;
+        private String status;
+        private String reference;
+        private String semanticLocation;
+
+        public Builder(String name) {
+            this.reportName = name;
+        }
+
+        public Builder reportType(String type) {
+            this.reportType = type;
+            return this;
+        }
+
+        public Builder reportName(String name) {
+            this.reportName = name;
+            return this;
+        }
+
+        public Builder location(Location location) {
+            this.location = location;
+            return this;
+        }
+
+        public Builder incidentDateTime(LocalDateTime incidentTime) {
+            this.incidentDateTime = incidentTime;
+            return this;
+        }
+
+        public Builder reportDateTime(LocalDateTime reportTime) {
+            this.reportDateTime = reportTime;
+            return this;
+        }
+
+        public Builder reportDescription(String description) {
+            this.reportDescription = description;
+            return this;
+        }
+
+        public Builder status(String status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder reference(String reference) {
+            this.reference = reference;
+            return this;
+        }
+
+        public Builder semanticLocation(String semanticLocation) {
+            this.semanticLocation = semanticLocation;
+            return this;
+        }
+
+        public Report build() {
+            return new Report(this);
+        }
     }
 }

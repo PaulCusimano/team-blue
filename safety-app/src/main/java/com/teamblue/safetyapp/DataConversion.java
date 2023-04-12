@@ -42,7 +42,7 @@ public class DataConversion {
     public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
         String pdfUrl = "https://www.lsu.edu/police/files/crime-log/dcfr.pdf";
         String jsonFilePath = "safety-app\\src\\main\\resources\\JSONoutput.json";
-        convertPDF(pdfUrl, jsonFilePath);
+        // convertPDF(pdfUrl, jsonFilePath);
 
         List<Report> reports = readJSON(jsonFilePath);
 
@@ -121,10 +121,15 @@ public class DataConversion {
                 String status = line[8];
                 String reference = line[2];
 
-                Report report = new Report(reportType, reportName, location, incidentDate,
-                        reportDate,
-                        reportDescription,
-                        status, reference);
+                Report report = new Report.Builder(reportName)
+                        .reportType(reportType)
+                        .location(location)
+                        .incidentDateTime(incidentDate)
+                        .reportDateTime(reportDate)
+                        .reportDescription(reportDescription)
+                        .status(status)
+                        .reference(reference)
+                        .build();
                 reports.add(report);
             }
         }
@@ -132,7 +137,6 @@ public class DataConversion {
     }
 
     public static List<Report> readJSON(String jsonFilePath) throws IOException {
-
         List<Report> reports = new ArrayList<>();
         String jsonString = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
         JSONArray jsonArray = new JSONArray(jsonString);
@@ -141,7 +145,7 @@ public class DataConversion {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             JSONArray dataArray = jsonObject.getJSONArray("data");
             System.out.println("i:" + i);
-            Report report = new Report();
+            Report.Builder builder = new Report.Builder("tempName");
             for (int j = 0; j < dataArray.length(); j++) {
                 System.out.println("j:" + j);
                 JSONArray innerArray = dataArray.getJSONArray(j);
@@ -150,49 +154,42 @@ public class DataConversion {
                     String text = dataObject.getString("text");
                     System.out.println("k:" + k);
                     System.out.println(text);
-                    if (k == 1) {
-
-                    } else if (k == 2) {
-
-                    } else if (k == 3) {
-
-                    }
                     switch (k) {
                         case 0:
-                            report.setReportDateTime(convertStringToLocalDateTime(text));
+                            builder.reportDateTime(convertStringToLocalDateTime(text));
                             break;
                         case 1:
-                            report.setReportName(text);
-                            report.setReference("/reports/" + text);
+                            builder.reportName(text);
+                            builder.reference("/reports/" + text);
                             break;
                         case 2:
-                            report.setIncidentDateTime(convertStringToLocalDateTime(text));
+                            builder.incidentDateTime(convertStringToLocalDateTime(text));
                             break;
                         case 3:
-                            report.setReportType(text);
+                            builder.reportType(text);
                             break;
                         case 5:
-                            report.setReportDescription(text);
+                            builder.reportDescription(text);
                             break;
                         case 6:
                             if (text.equals("Cleared")) {
-                                report.setStatus("CLEARED");
+                                builder.status("CLEARED");
                             } else if (text.equals("Closed")) {
-                                report.setStatus("CLOSED");
+                                builder.status("CLOSED");
                             } else if (text.equals("Open")) {
-                                report.setStatus("OPEN");
+                                builder.status("OPEN");
                             } else {
-                                report.setStatus("UNKNOWN");
+                                builder.status("UNKNOWN");
                             }
                             break;
                         case 7:
-                            report.setSemanticLocation(text);
-                            report.setLocation(convertToCoordinates(text));
-                            System.out.println(report.getLocation());
+                            builder.semanticLocation(text);
+                            builder.location(convertToCoordinates(text));
                             break;
                     }
                 }
             }
+            Report report = builder.build();
             reports.add(report);
         }
         return reports;
