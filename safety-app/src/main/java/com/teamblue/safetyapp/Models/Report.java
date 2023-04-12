@@ -22,7 +22,7 @@ public class Report {
         this.reportName = name;
         this.location = location;
         this.incidentDateTime = incidentTime;
-        this.reportDateTime = reportDateTime;
+        this.reportDateTime = reportTime;
         this.reportDescription = reportDescription;
         this.status = status;
         this.reference = reference;
