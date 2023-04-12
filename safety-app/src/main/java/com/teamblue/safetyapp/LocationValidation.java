@@ -32,7 +32,7 @@ public class LocationValidation {
 
     public void saveNearCampusToFirestore(boolean nearCampus)
             throws IOException, InterruptedException, ExecutionException {
-                
+
         Firestore db = FirestoreDatabase.getFirestore();
 
         DocumentReference docRef = db.collection("reports").document(reference);
@@ -44,8 +44,7 @@ public class LocationValidation {
         System.out.println("nearCampus: " + nearCampus);
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
-        Report report = new Report();
+    public static void validateLocation(Report report) throws IOException, InterruptedException, ExecutionException {
         double longitude = report.getLocation().getLongitude();
         double latitude = report.getLocation().getLatitude();
         String reference = report.getReference();

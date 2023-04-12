@@ -27,31 +27,6 @@ public class APIManager {
 		DataConversion.main(args);
 	}
 
-	/**
-	 * 
-	 * POST request for creating a report. It can be easily tested by
-	 * using Postman.
-	 * 
-	 * It requires a request body which cannot easily be sent through browser input.
-	 * 
-	 * @param type             The type of the incident reported.
-	 * 
-	 * @param name             The name of the person reporting the incident.
-	 * 
-	 * @param latitude         The latitude of the location where the incident
-	 *                         occurred.
-	 * 
-	 * @param longitude        The longitude of the location where the incident
-	 *                         occurred.
-	 * 
-	 * @param incidentDateTime The date and time when the incident occurred. Must be
-	 *                         in
-	 *                         yyyy-MM-dd HH:mm format.
-	 * 
-	 * @param description      The description of the incident.
-	 * 
-	 * @return A message indicating that the report has been successfully created.
-	 */
 	@PostMapping("/MakeReport")
 	public String createReport(@RequestParam String type, @RequestParam String name, @RequestParam String latitude,
 			@RequestParam String longitude, @RequestParam String incidentDateTime,
@@ -81,8 +56,16 @@ public class APIManager {
 		String status = "OPEN";
 
 		// Create a Report object with the information provided.
-		Report report = new Report(type, name, userLocation, incidentTimeFormatted, reportDateTime, incidentDescription,
-				status, referenceReport);
+
+		Report report = new Report.Builder(name)
+				.reportType(type)
+				.location(userLocation)
+				.incidentDateTime(incidentTimeFormatted)
+				.reportDateTime(reportDateTime)
+				.reportDescription(incidentDescription)
+				.status(status)
+				.reference(referenceReport)
+				.build();
 
 		// Send the report to the ReportHandler to be processed.
 		ReportHandler reportHandler = new ReportHandler();
