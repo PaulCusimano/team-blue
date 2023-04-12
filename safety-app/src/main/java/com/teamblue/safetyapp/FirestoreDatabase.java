@@ -31,6 +31,7 @@ public class FirestoreDatabase {
     public static Firestore getFirestore() throws IOException {
         // Check if the firestore field is null
         if (firestore == null) {
+            synchronized (FirestoreDatabase.class) {
             // Read the service account JSON file as an input stream
             FileInputStream serviceAccount = new FileInputStream(SERVICE_ACCOUNT_PATH);
             // Build a FirestoreOptions object with the credentials and project ID
@@ -40,6 +41,7 @@ public class FirestoreDatabase {
                     .build();
             // Assign the firestore field to the service provided by the options
             firestore = firestoreOptions.getService();
+            }
         }
         // Return the firestore field
         return firestore;
